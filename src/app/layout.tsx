@@ -1,7 +1,11 @@
-import "./globals.scss";
-import { Inter } from "next/font/google";
+import { Lora } from "next/font/google";
+import { Header, Footer } from "@components";
+import "@styles/globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const lora = Lora({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Purity",
@@ -15,7 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className={inter.className}>{children}</body>
+      <body className={lora.className}>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

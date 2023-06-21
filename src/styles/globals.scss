@@ -1,7 +1,4 @@
-:root {
-  --font-color: #333333;
-  --background-color: #f4f4f5;
-}
+@import "@styles/variables.scss";
 
 * {
   box-sizing: border-box;
@@ -15,8 +12,15 @@ body {
 }
 
 body {
-  color: var(--font-color);
-  background: var(--background-color);
+  color: $font-color;
+  background: $main-bg-color;
+}
+
+main {
+  margin: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 a {

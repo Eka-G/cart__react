@@ -1,0 +1,22 @@
+@import "@styles/variables.scss";
+
+$cart-size: 30;
+
+.header {
+  padding: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $second-bg-color;
+
+  &__cart {
+    position: absolute;
+    top: calc(50% - #{$cart-size}px / 2);
+    right: 20px;
+  }
+}
+
+:export {
+  cartSize: $cart-size;
+}
