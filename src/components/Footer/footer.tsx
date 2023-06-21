@@ -1,11 +1,16 @@
+"use client";
+
+import { Layout } from "antd";
 import styles from "./style.module.scss";
 
-const Footer = () => {
+const { Footer } = Layout;
+
+const FooterComponent = () => {
   return (
-    <footer className={styles.footer}>
+    <Footer className={styles.footer}>
       <p>© 2023 PURITY</p>
-    </footer>
+    </Footer>
   );
 };
 
-export default Footer;
+export default FooterComponent;

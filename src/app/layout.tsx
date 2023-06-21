@@ -1,11 +1,6 @@
-import { Lora } from "next/font/google";
-import { Header, Footer } from "@components";
+import { BaseLayout } from "@components";
+import "antd/dist/reset.css";
 import "@styles/globals.scss";
-
-const lora = Lora({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 export const metadata = {
   title: "Purity",
@@ -19,10 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className={lora.className}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+      <body>
+        <BaseLayout>{children}</BaseLayout>
       </body>
     </html>
   );
