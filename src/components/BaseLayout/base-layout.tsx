@@ -19,6 +19,7 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
           fontFamily: lora.style.fontFamily,
           fontSize: 14,
           colorTextBase: "#6e6e6e",
+          colorPrimary: "#c99eff",
         },
         components: {
           Typography: {
@@ -28,11 +29,16 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
             fontSizeHeading4: 18,
             fontSizeHeading5: 16,
             titleMarginBottom: 50,
+            borderRadiusOuter: 0,
           },
         },
       }}
     >
-      <Layout>
+      <Layout
+        style={{
+          position: "relative",
+        }}
+      >
         <Header />
         <Content>{children}</Content>
         <Footer />

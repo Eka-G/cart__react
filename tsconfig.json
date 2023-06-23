@@ -22,9 +22,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components": ["./src/components"],
-      "@styles/*": ["./src/styles/*"]
+      "@shared/*": ["./src/shared/*"],
+      "@styles/*": ["./src/styles/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/shared/static.js"],
   "exclude": ["node_modules"]
 }
