@@ -1,3 +1,5 @@
+export type RequestStatus = "idle" | "loading" | "failed";
+
 export interface Responce {
   api_execute_time: string;
   api_success: boolean;
@@ -6,7 +8,6 @@ export interface Responce {
   api_platform_version: null;
   api_code: number;
   api_authorize: boolean;
-  api_data: APIData;
   api_data_success: boolean;
   api_data_result: boolean;
   api_exception: any[];
@@ -14,62 +15,43 @@ export interface Responce {
   api_host: string;
 }
 
-export interface APIData {
-  aProduct: ResponceData[];
-}
-
 export interface ResponceData {
   id: number;
   template: string;
-  brand_name: string;
-  category_id: string;
   category_ids: string[];
   parent_category_ids: Array<ParentCategoryID[]>;
-  category_name: string;
-  type: string;
   article: string;
   popular: number;
   size_details: any[];
   price: number;
   block: boolean;
   original_price: number;
-  coming_soon: boolean;
   date_create: string;
   saleaction: boolean;
   currency: Currency;
-  photos: Photo[];
   videos: any[];
   video_cover: any[];
-  favorite: boolean;
-  count: number;
-  subscribe: boolean;
   season: null;
   name_old: string;
   name: string;
-  descriptions: Descriptions;
-  material_descriptions: Descriptions;
+  material_descriptions: MaterialDescriptions;
   measurements: Measurements;
   measurements_unit: string;
-  model: Model;
-  stores: any[];
-  sizes: { [key: string]: Size };
   is_ffm: boolean;
   colors: Colors;
   format_price: string[];
   details_name: DetailsName;
-  details: Details;
   soldout: boolean;
   available: boolean;
-  url: string;
   care: string[];
 }
 
 export interface Colors {
-  current: Current;
-  other: Other[];
+  current: CurrentColor;
+  other: OtherColors[];
 }
 
-export interface Current {
+export interface CurrentColor {
   id: number;
   name: string;
   amount: number;
@@ -79,15 +61,15 @@ export interface Current {
   color_sample: any[];
 }
 
-export interface Other {
-  id: number;
+export interface OtherColors {
+  id?: number;
   name: string;
   amount: number;
   value: string;
   show: boolean;
   price: string;
   color_sample: ColorSample;
-  photo: Photo;
+  photo?: Photo;
 }
 
 export interface ColorSample {
@@ -119,7 +101,7 @@ export interface Currency {
   postfix_symbol: string;
 }
 
-export interface Descriptions {
+export interface MaterialDescriptions {
   mark_down: string;
   html: string;
   text: string;

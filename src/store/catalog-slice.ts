@@ -1,13 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
-import { default as axios } from "@api";
+import axios from "@api/index";
 import { type Card } from "@shared/typification";
-import { Responce, ResponceData } from "@shared/apiType";
+import {
+  type RequestStatus,
+  CatalogResponce,
+  CatalogItemData,
+} from "@api/types";
 import { type AppState } from "@store/store";
 
 export interface CatalogState {
   items: Card[];
-  status: "idle" | "loading" | "failed";
+  status: RequestStatus;
   error: string | null;
 }
 
@@ -20,7 +24,7 @@ const initialState: CatalogState = {
 export const getItemsAsync = createAsyncThunk(
   "catalog/fetchItems",
   async () => {
-    const response: AxiosResponse<Responce, any> = await axios.post(
+    const response: AxiosResponse<CatalogResponce, any> = await axios.post(
       "category/get_category_product_list",
       {
         category: "clothes",
@@ -30,7 +34,7 @@ export const getItemsAsync = createAsyncThunk(
     );
 
     const dataProducts = await response.data.api_data.aProduct;
-    const items: Card[] = dataProducts.map((item: ResponceData) => {
+    const items: Card[] = dataProducts.map((item: CatalogItemData) => {
       const sizes = Object.values(item.sizes).map(({ id, name, amount }) => ({
         id,
         name,
@@ -71,8 +75,8 @@ export const getItemsAsync = createAsyncThunk(
   }
 );
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const catalogSlice = createSlice({
+  name: "catalog",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -94,4 +98,4 @@ export const counterSlice = createSlice({
 
 export const selectItems = (state: AppState) => state.catalog.items;
 
-export default counterSlice.reducer;
+export default catalogSlice.reducer;

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { CardGrid } from "@components";
-import { getItemsAsync, selectItems } from "@store/catalogSlice";
+import { getItemsAsync, selectItems } from "@store/catalog-slice";
 
 const { Title } = Typography;
 
