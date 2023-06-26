@@ -37,6 +37,7 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
       <Layout
         style={{
           position: "relative",
+          minHeight: "100vh",
         }}
       >
         <Header />

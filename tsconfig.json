@@ -21,9 +21,12 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@api": ["./src/api"],
       "@components": ["./src/components"],
+      "@hooks": ["./src/hooks"],
       "@shared/*": ["./src/shared/*"],
-      "@styles/*": ["./src/styles/*"],
+      "@store/*": ["./src/store/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/shared/static.js"],
