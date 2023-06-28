@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  async rewrites() {
+    return [
+      {
+        source: "/api/:slug*",
+        destination: "https://api.lichi.com/:slug*",
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

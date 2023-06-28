@@ -25,7 +25,7 @@ export const getItemsAsync = createAsyncThunk(
   "catalog/fetchItems",
   async () => {
     const response: AxiosResponse<CatalogResponce, any> = await axios.post(
-      "category/get_category_product_list",
+      "/api/category/get_category_product_list",
       {
         category: "clothes",
         lang: 1,
