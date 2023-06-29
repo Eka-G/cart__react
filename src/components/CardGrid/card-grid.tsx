@@ -13,16 +13,8 @@ const CardGrid = ({ cards }: CardGridProps) => {
       gutter={[24, 32]}
       style={{ width: "100%" }}
     >
-      {cards.map((card, i) => (
-        <Col
-          md={{
-            span: 8,
-          }}
-          lg={{
-            span: spanLg,
-          }}
-          key={`${card}-${i + 1}`}
-        >
+      {cards.map((card) => (
+        <Col key={card.id} md={{ span: 8 }} lg={{ span: spanLg }}>
           <CardItem info={card} />
         </Col>
       ))}

@@ -1,14 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Col, Image, InputNumber, Row, Select, Typography } from "antd";
+import { Button, Col, Image, InputNumber, Row, Select, Typography } from "antd";
+import { useAppDispatch } from "@hooks";
 import { ShoppingCartItemProps } from "@shared/typification";
+import {
+  addCartItemAsync,
+  removeCartItemsAsync,
+} from "@store/shopping-cart-slice";
 
 const { Text } = Typography;
 
 const ShoppingCartItem = ({
-  info: { name, photo, price, size, sizes, color, count, available },
+  info: { id, name, photo, price, size, sizes, color, count, available },
 }: ShoppingCartItemProps) => {
+  const dispatch = useAppDispatch();
   const [currentSize, setSize] = useState(size);
   const [currentAmount, setAmount] = useState(count);
 
@@ -17,8 +23,15 @@ const ShoppingCartItem = ({
     setAmount(1);
   };
 
-  const handleAmountChange = (value: number) => {
-    setAmount(value);
+  const handleAmountChange = (value: number, info: { type: "up" | "down" }) => {
+    info.type === "up"
+      ? dispatch(addCartItemAsync(id))
+      : dispatch(removeCartItemsAsync({ id }));
+  };
+
+  const haldleDetete = () => {
+    const isAll = currentAmount === 1;
+    dispatch(removeCartItemsAsync({ id, isAll }));
   };
 
   return (
@@ -82,8 +95,14 @@ const ShoppingCartItem = ({
         xs={{
           order: 3,
         }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
-        <Text>{price}</Text>
+        <Text style={{ marginBottom: 10 }}>{price}</Text>
+        <Button onClick={haldleDetete}>Удалить</Button>
       </Col>
     </Row>
   );

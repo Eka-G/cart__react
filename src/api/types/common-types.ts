@@ -38,7 +38,6 @@ export interface ResponceData {
   measurements: Measurements;
   measurements_unit: string;
   is_ffm: boolean;
-  colors: Colors;
   format_price: string[];
   details_name: DetailsName;
   soldout: boolean;

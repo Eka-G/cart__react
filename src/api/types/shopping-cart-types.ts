@@ -30,6 +30,14 @@ export interface ShoppingCartItemData extends ResponceData {
   is_action: boolean;
   gift: boolean;
   photos_all: Photo[];
+  colors: {
+    amount: number;
+    color_sample: any[];
+    name: string;
+    price: string;
+    show: boolean;
+    value: string;
+  };
   colors_all: Colors[];
   sizes_all: { [key: string]: Size };
   barcode: string;

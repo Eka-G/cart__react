@@ -64,7 +64,6 @@ export interface ShoppingCartSizes {
 
 export interface ShoppingCartItem {
   id: number;
-  category_name: string;
   name: string;
   price: string;
   photo: string;
@@ -83,4 +82,5 @@ export interface ShoppingCartItemProps {
 
 export interface ShoppingCartGridProps {
   items: ShoppingCartItem[];
+  summaryPrice: number;
 }

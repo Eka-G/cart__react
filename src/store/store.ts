@@ -7,11 +7,13 @@ import {
 } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import catalogReducer from "@store/catalog-slice";
+import shoppingCartReducer from "@store/shopping-cart-slice";
 
 const makeStore = () =>
   configureStore({
     reducer: {
       catalog: catalogReducer,
+      shoppingCart: shoppingCartReducer,
     },
     devTools: true,
   });

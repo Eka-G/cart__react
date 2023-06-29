@@ -2,6 +2,7 @@ import {
   Responce,
   ResponceData,
   Photo,
+  Colors,
   MaterialDescriptions,
   Model,
   Size,
@@ -23,6 +24,7 @@ export interface CatalogItemData extends ResponceData {
   type: string;
   coming_soon: boolean;
   photos: Photo[];
+  colors: Colors;
   favorite: boolean;
   count: number;
   subscribe: boolean;

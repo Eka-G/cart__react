@@ -2,6 +2,8 @@
 
 import { Card, Typography, Select, Button, Row, Col } from "antd";
 import { useState } from "react";
+import { useAppDispatch } from "@hooks";
+import { addCartItemAsync } from "@store/shopping-cart-slice";
 import { CardProps } from "@shared/typification";
 
 const { Meta } = Card;
@@ -10,10 +12,16 @@ const { Text } = Typography;
 const CardItem = ({
   info: { id, name, photos, color, price, sizes },
 }: CardProps) => {
+  const dispatch = useAppDispatch();
   const [currentSize, setSize] = useState(sizes[0].name);
 
   const handleSizeChange = (value: string) => {
     setSize(value);
+  };
+
+  const handleClick = () => {
+    const id = sizes.find((size) => size.name === currentSize)?.id;
+    if (id) dispatch(addCartItemAsync(id));
   };
 
   return (
@@ -74,7 +82,9 @@ const CardItem = ({
         </Col>
 
         <Col span={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button type="primary">В корзину</Button>
+          <Button type="primary" onClick={handleClick}>
+            В корзину
+          </Button>
         </Col>
       </Row>
     </Card>

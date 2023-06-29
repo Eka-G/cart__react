@@ -6,12 +6,7 @@ import { ShoppingCartGridProps } from "@shared/typification";
 
 const { Text } = Typography;
 
-const ShoppingCartGrid = ({ items }: ShoppingCartGridProps) => {
-  const amount = items.reduce(
-    (acc, item) => acc + parseInt(item.price.replace(/[^0-9\.]/g, ""), 10),
-    0
-  );
-
+const ShoppingCartGrid = ({ items, summaryPrice }: ShoppingCartGridProps) => {
   return (
     <Row
       justify="center"
@@ -20,7 +15,7 @@ const ShoppingCartGrid = ({ items }: ShoppingCartGridProps) => {
       style={{ width: "100%" }}
     >
       {items.map((item) => (
-        <Col span={24} key={item.id}>
+        <Col span={24} key={`${item.id}-${item.count}`}>
           <ShoppingCartItem info={item} />
         </Col>
       ))}
@@ -33,7 +28,7 @@ const ShoppingCartGrid = ({ items }: ShoppingCartGridProps) => {
         }}
       >
         <Text>
-          К оплате: {amount} {items[0].postfix_symbol}
+          К оплате: {summaryPrice} {items[0]?.postfix_symbol}
         </Text>
       </Col>
       <Col
