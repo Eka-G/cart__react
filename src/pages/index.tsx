@@ -3,14 +3,19 @@
 import { useEffect } from "react";
 import { Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "@hooks";
-import { CardGrid } from "@components";
-import { getItemsAsync, selectItems } from "@store/catalog-slice";
+import { CardGrid, Spinner } from "@components";
+import {
+  getItemsAsync,
+  selectItems,
+  getCatalogLoading,
+} from "@store/catalog-slice";
 
 const { Title } = Typography;
 
 export default function Home() {
-  const items = useAppSelector(selectItems);
   const dispatch = useAppDispatch();
+  const items = useAppSelector(selectItems);
+  const isLoading = useAppSelector(getCatalogLoading);
 
   useEffect(() => {
     dispatch(getItemsAsync());
@@ -19,7 +24,13 @@ export default function Home() {
   return (
     <section>
       <Title level={1}>Добро пожаловать в каталог</Title>
-      <CardGrid cards={items} />
+      {isLoading ? (
+        <Spinner spinning={isLoading}>
+          <Title level={2}>Минутку...</Title>
+        </Spinner>
+      ) : (
+        <CardGrid cards={items} />
+      )}
     </section>
   );
 }

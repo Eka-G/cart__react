@@ -34,6 +34,7 @@ export interface Card {
     percent: number;
   }[];
   soldout: boolean;
+  addingLoading: boolean;
 }
 
 export interface CardProps {

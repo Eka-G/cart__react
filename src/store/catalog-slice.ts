@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import axios from "@api/index";
 import { type Card } from "@shared/typification";
@@ -11,13 +11,13 @@ import { type AppState } from "@store/store";
 
 export interface CatalogState {
   items: Card[];
-  status: RequestStatus;
+  loading: RequestStatus;
   error: string | null;
 }
 
 const initialState: CatalogState = {
   items: [],
-  status: "idle",
+  loading: "idle",
   error: null,
 };
 
@@ -68,6 +68,7 @@ export const getItemsAsync = createAsyncThunk(
         },
         materials,
         soldout: item.soldout,
+        addingLoading: false,
       };
     });
 
@@ -78,24 +79,42 @@ export const getItemsAsync = createAsyncThunk(
 export const catalogSlice = createSlice({
   name: "catalog",
   initialState,
-  reducers: {},
+  reducers: {
+    //TODO refactor code repeat
+    startAddingLoading: ({ items }, action: PayloadAction<number>) => {
+      const currentItem = items.find((item) => item.id === action.payload);
+
+      if (currentItem) {
+        currentItem.addingLoading = true;
+      }
+    },
+    stopAddingLoading: ({ items }, action: PayloadAction<number>) => {
+      const currentItem = items.find((item) => item.id === action.payload);
+
+      if (currentItem) {
+        currentItem.addingLoading = false;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getItemsAsync.pending, (state) => {
-        state.status = "loading";
+        state.loading = "loading";
       })
       .addCase(getItemsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.loading = "idle";
         state.items = action.payload;
       })
       .addCase(getItemsAsync.rejected, (state) => {
-        state.status = "failed";
+        state.loading = "failed";
       });
   },
 });
 
-// export const {  } = counterSlice.actions;
+export const { startAddingLoading, stopAddingLoading } = catalogSlice.actions;
 
 export const selectItems = (state: AppState) => state.catalog.items;
+export const getCatalogLoading = (state: AppState) =>
+  state.catalog.loading === "loading";
 
 export default catalogSlice.reducer;

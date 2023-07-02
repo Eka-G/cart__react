@@ -25,19 +25,16 @@ const ShoppingCartItem = ({
 
   const handleAmountChange = (value: number, info: { type: "up" | "down" }) => {
     info.type === "up"
-      ? dispatch(addCartItemAsync(id))
+      ? dispatch(addCartItemAsync({ sizeId: id }))
       : dispatch(removeCartItemsAsync({ id }));
   };
 
-  const haldleDetete = () => {
-    const isAll = currentAmount === 1;
-    dispatch(removeCartItemsAsync({ id, isAll }));
-  };
+  const haldleDetete = () =>
+    dispatch(removeCartItemsAsync({ id, isAll: true }));
 
   return (
     <Row
       justify="space-between"
-      gutter={[24, 16]}
       style={{
         padding: "20px 0",
         borderBottom: "1px solid #afb0b3",
@@ -52,25 +49,24 @@ const ShoppingCartItem = ({
           order: 0,
         }}
         sm={{
-          span: 7,
+          span: 6,
           order: 1,
         }}
       >
-        <Text>{name}</Text>
+        <Text style={{ marginBottom: 10, display: "inline-block" }}>
+          {name}
+        </Text>
         {!available && <Text type="danger">Извините, товар недоступен</Text>}
       </Col>
-      <Col xs={{ order: 2 }}>
-        <Select
-          value={currentSize}
-          style={{ marginBottom: 20, width: 70 }}
-          onChange={handleSizeChange}
-          options={Object.keys(sizes).map((size) => ({
-            value: size,
-            label: sizes[size].name,
-          }))}
-          disabled={!available}
-        />
-
+      <Col
+        xs={{ order: 2 }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ marginBottom: 10 }}>Размер: {size}</Text>
         <InputNumber
           controls
           value={currentAmount}
@@ -82,7 +78,7 @@ const ShoppingCartItem = ({
         />
         <div
           style={{
-            margin: "20px 0",
+            marginTop: 10,
             height: 20,
             width: 20,
             border: "1px solid #efe2ff",

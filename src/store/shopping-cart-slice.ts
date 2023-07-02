@@ -8,18 +8,26 @@ import {
   ShoppingCartItemData,
 } from "@api/types/shopping-cart-types";
 import { type AppState } from "@store/store";
+import { startAddingLoading, stopAddingLoading } from "@store/catalog-slice";
 
 export interface CartState {
   items: ShoppingCartItem[];
   summaryPrice: number;
-  status: RequestStatus;
+  cartStatus: RequestStatus;
+  itemStatus: RequestStatus;
   error: string | null;
+}
+
+export interface AddingProps {
+  id?: number;
+  sizeId: number;
 }
 
 const initialState: CartState = {
   items: [],
   summaryPrice: 0,
-  status: "idle",
+  cartStatus: "idle",
+  itemStatus: "idle",
   error: null,
 };
 
@@ -79,14 +87,18 @@ export const getCartItemsAsync = createAsyncThunk(
 
 export const addCartItemAsync = createAsyncThunk(
   "cart/addItem",
-  async (id: number, { dispatch }) => {
+  async ({ id, sizeId }: AddingProps, { dispatch }) => {
+    if (id) {
+      dispatch(startAddingLoading(id));
+    }
+
     await axios.post("/api/cart/add", {
       lang: 1,
       shop: 1,
-      id,
+      id: sizeId,
     });
 
-    dispatch(getCartItemsAsync());
+    id ? dispatch(stopAddingLoading(id)) : dispatch(getCartItemsAsync());
   }
 );
 
@@ -111,41 +123,43 @@ export const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCartItemsAsync.pending, (state) => {
-        state.status = "loading";
+        state.cartStatus = "loading";
       })
       .addCase(getCartItemsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.cartStatus = "idle";
         state.items = action.payload.items;
         state.summaryPrice = action.payload.summaryPrice;
       })
       .addCase(getCartItemsAsync.rejected, (state) => {
-        state.status = "failed";
+        state.cartStatus = "failed";
       })
-      .addCase(addCartItemAsync.pending, (state) => {
-        state.status = "loading";
+      .addCase(addCartItemAsync.pending, (state, action) => {
+        state.itemStatus = "loading";
       })
-      .addCase(addCartItemAsync.fulfilled, (state) => {
-        state.status = "idle";
+      .addCase(addCartItemAsync.fulfilled, (state, action) => {
+        state.itemStatus = "idle";
       })
-      .addCase(addCartItemAsync.rejected, (state) => {
-        state.status = "failed";
+      .addCase(addCartItemAsync.rejected, (state, action) => {
+        state.itemStatus = "failed";
       })
       .addCase(removeCartItemsAsync.pending, (state) => {
-        state.status = "loading";
+        state.itemStatus = "loading";
       })
       .addCase(removeCartItemsAsync.fulfilled, (state) => {
-        state.status = "idle";
+        state.itemStatus = "idle";
       })
       .addCase(removeCartItemsAsync.rejected, (state) => {
-        state.status = "failed";
+        state.itemStatus = "failed";
       });
   },
 });
 
-// export const {  } = cartSlice.actions;
-
 export const selectCartItems = (state: AppState) => state.shoppingCart.items;
 export const selectCartPrice = (state: AppState) =>
   state.shoppingCart.summaryPrice;
+export const getCartLoading = (state: AppState) =>
+  state.shoppingCart.cartStatus === "loading";
+export const getCartChangingLoading = (state: AppState) =>
+  state.shoppingCart.itemStatus === "loading";
 
 export default cartSlice.reducer;
