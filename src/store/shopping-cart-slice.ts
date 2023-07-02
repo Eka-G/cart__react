@@ -15,6 +15,7 @@ export interface CartState {
   summaryPrice: number;
   cartStatus: RequestStatus;
   itemStatus: RequestStatus;
+  amount: number;
   error: string | null;
 }
 
@@ -28,6 +29,7 @@ const initialState: CartState = {
   summaryPrice: 0,
   cartStatus: "idle",
   itemStatus: "idle",
+  amount: 0,
   error: null,
 };
 
@@ -43,6 +45,7 @@ export const getCartItemsAsync = createAsyncThunk(
     );
 
     const aData = await response.data.api_data.aData;
+    let totalItems = 0;
     const items: ShoppingCartItem[] = aData.map(
       (item: ShoppingCartItemData) => {
         const sizes = Object.values(item.sizes_all).map(
@@ -52,6 +55,7 @@ export const getCartItemsAsync = createAsyncThunk(
             amount,
           })
         );
+        totalItems += Number(item.count);
 
         return {
           id: item.item_id,
@@ -81,6 +85,7 @@ export const getCartItemsAsync = createAsyncThunk(
     return {
       items,
       summaryPrice: response.data.api_data.iSummaryPrice,
+      amount: totalItems,
     };
   }
 );
@@ -99,6 +104,8 @@ export const addCartItemAsync = createAsyncThunk(
     });
 
     id ? dispatch(stopAddingLoading(id)) : dispatch(getCartItemsAsync());
+
+    dispatch(increaseAmount());
   }
 );
 
@@ -119,16 +126,36 @@ export const removeCartItemsAsync = createAsyncThunk(
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {},
+  reducers: {
+    increaseAmount: (state) => {
+      return {
+        ...state,
+        amount: state.amount + 1,
+      };
+    },
+    decreaseAmount: (state) => {
+      const resultAmount = state.amount === 0 ? state.amount : state.amount - 1;
+
+      return {
+        ...state,
+        amount: resultAmount,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCartItemsAsync.pending, (state) => {
         state.cartStatus = "loading";
       })
       .addCase(getCartItemsAsync.fulfilled, (state, action) => {
-        state.cartStatus = "idle";
-        state.items = action.payload.items;
-        state.summaryPrice = action.payload.summaryPrice;
+        return {
+          ...state,
+          items: action.payload.items,
+          summaryPrice: action.payload.summaryPrice,
+          cartStatus: "idle",
+          isEmpty: !action.payload.items.length,
+          amount: action.payload.amount,
+        };
       })
       .addCase(getCartItemsAsync.rejected, (state) => {
         state.cartStatus = "failed";
@@ -154,9 +181,12 @@ export const cartSlice = createSlice({
   },
 });
 
+export const { increaseAmount, decreaseAmount } = cartSlice.actions;
+
 export const selectCartItems = (state: AppState) => state.shoppingCart.items;
 export const selectCartPrice = (state: AppState) =>
   state.shoppingCart.summaryPrice;
+export const selectCartAmount = (state: AppState) => state.shoppingCart.amount;
 export const getCartLoading = (state: AppState) =>
   state.shoppingCart.cartStatus === "loading";
 export const getCartChangingLoading = (state: AppState) =>

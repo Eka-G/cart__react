@@ -9,6 +9,7 @@ import {
   selectItems,
   getCatalogLoading,
 } from "@store/catalog-slice";
+import { getCartItemsAsync } from "@store/shopping-cart-slice";
 
 const { Title } = Typography;
 
@@ -19,6 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getItemsAsync());
+    dispatch(getCartItemsAsync());
   }, [dispatch]);
 
   return (

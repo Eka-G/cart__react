@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button, Col, Row, Typography } from "antd";
 import { useAppSelector } from "@hooks";
 import { getCartLoading } from "@store/shopping-cart-slice";
@@ -10,6 +11,11 @@ const { Text } = Typography;
 
 const ShoppingCartGrid = ({ items, summaryPrice }: ShoppingCartGridProps) => {
   const cartLoading = useAppSelector(getCartLoading);
+  const itemsColumns = items.map((item) => (
+    <Col span={24} key={`${item.id}-${item.count}`}>
+      <ShoppingCartItem info={item} />
+    </Col>
+  ));
 
   return (
     <Row
@@ -19,34 +25,39 @@ const ShoppingCartGrid = ({ items, summaryPrice }: ShoppingCartGridProps) => {
       style={{ width: "100%" }}
     >
       <Spinner spinning={cartLoading}>
-        {items.map((item) => (
-          <Col span={24} key={`${item.id}-${item.count}`}>
-            <ShoppingCartItem info={item} />
-          </Col>
-        ))}
+        {itemsColumns}
 
-        <Col
-          span={24}
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
+        {summaryPrice ? (
+          <>
+            <Col
+              span={24}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Text>
+                К оплате: {summaryPrice} {items[0]?.postfix_symbol}
+              </Text>
+            </Col>
+            <Col
+              span={24}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button type="primary">ЗАКАЗАТЬ</Button>
+            </Col>
+          </>
+        ) : (
           <Text>
-            К оплате: {summaryPrice} {items[0]?.postfix_symbol}
+            Ваша корзина пока пуста...
+            <br />
+            <Link href="/">Взгляните на товары из нашего каталога</Link>
           </Text>
-        </Col>
+        )}
       </Spinner>
-
-      <Col
-        span={24}
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
-        <Button type="primary">ЗАКАЗАТЬ</Button>
-      </Col>
     </Row>
   );
 };
