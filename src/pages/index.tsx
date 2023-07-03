@@ -19,6 +19,9 @@ export default function Home() {
   const isLoading = useAppSelector(getCatalogLoading);
 
   useEffect(() => {
+    //reason: response cookie SID just for lichi domain
+    document.cookie = "SID=SID.16880472617984.7713926-1";
+
     dispatch(getItemsAsync());
     dispatch(getCartItemsAsync());
   }, [dispatch]);
