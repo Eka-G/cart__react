@@ -3,6 +3,7 @@
 import { ConfigProvider, Layout } from "antd";
 import { Header, Footer } from "@components";
 import { Lora } from "next/font/google";
+import styles from "./style.module.scss";
 
 const lora = Lora({
   weight: "400",
@@ -17,16 +18,16 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
       theme={{
         token: {
           fontFamily: lora.style.fontFamily,
-          fontSize: 14,
+          fontSize: 12,
           colorTextBase: "#6e6e6e",
           colorPrimary: "#c99eff",
         },
         components: {
           Typography: {
-            fontSizeHeading1: 24,
-            fontSizeHeading2: 22,
-            fontSizeHeading3: 20,
-            fontSizeHeading4: 18,
+            fontSizeHeading1: 22,
+            fontSizeHeading2: 20,
+            fontSizeHeading3: 18,
+            fontSizeHeading4: 16,
             fontSizeHeading5: 16,
             titleMarginBottom: 50,
             borderRadiusOuter: 0,
@@ -34,12 +35,7 @@ const BaseLayout = ({ children }: { children: React.ReactNode }) => {
         },
       }}
     >
-      <Layout
-        style={{
-          position: "relative",
-          minHeight: "100vh",
-        }}
-      >
+      <Layout className={styles.layout}>
         <Header />
         <Content>{children}</Content>
         <Footer />

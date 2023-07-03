@@ -5,6 +5,7 @@ import { Button, Col, Image, InputNumber, Row, Select, Typography } from "antd";
 import { useAppDispatch } from "@hooks";
 import { ShoppingCartItemProps } from "@shared/typification";
 import { addCartItemAsync, removeCartItemsAsync } from "@store/shoppingCart";
+import styles from "./style.module.scss";
 
 const { Text } = Typography;
 
@@ -30,13 +31,7 @@ const ShoppingCartItem = ({
     dispatch(removeCartItemsAsync({ id, isAll: true }));
 
   return (
-    <Row
-      justify="space-between"
-      style={{
-        padding: "20px 0",
-        borderBottom: "1px solid #afb0b3",
-      }}
-    >
+    <Row justify="space-between" className={styles.cart_item}>
       <Col xs={{ order: 1 }} sm={{ order: 0 }}>
         <Image src={photo} width={150} height={200} alt={name} />
       </Col>
@@ -50,51 +45,32 @@ const ShoppingCartItem = ({
           order: 1,
         }}
       >
-        <Text style={{ marginBottom: 10, display: "inline-block" }}>
-          {name}
-        </Text>
+        <Text className={styles.cart_item__text}>{name}</Text>
         {!available && <Text type="danger">Извините, товар недоступен</Text>}
       </Col>
-      <Col
-        xs={{ order: 2 }}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ marginBottom: 10 }}>Размер: {size}</Text>
+      <Col xs={{ order: 2 }} className={styles.cart_item__centered_columns}>
+        <Text className={styles.cart_item__text}>Размер: {size}</Text>
         <InputNumber
           controls
           value={currentAmount}
-          style={{ display: "block", width: 70 }}
+          className={styles.cart_item__amount}
           min={1}
           max={sizes[currentSize].amount}
           onStep={handleAmountChange}
           disabled={!available}
         />
         <div
-          style={{
-            marginTop: 10,
-            height: 20,
-            width: 20,
-            border: "1px solid #efe2ff",
-            borderRadius: "50%",
-            backgroundColor: color.value,
-          }}
+          className={styles.cart_item__color_sample}
+          style={{ backgroundColor: color.value }}
         />
       </Col>
       <Col
         xs={{
           order: 3,
         }}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+        className={styles.cart_item__centered_columns}
       >
-        <Text style={{ marginBottom: 10 }}>{price}</Text>
+        <Text className={styles.cart_item__text}>{price}</Text>
         <Button onClick={haldleDetete}>Удалить</Button>
       </Col>
     </Row>

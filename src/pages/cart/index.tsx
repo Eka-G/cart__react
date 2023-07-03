@@ -10,6 +10,7 @@ import {
   selectCartPrice,
   selectCartError,
 } from "@store/shoppingCart";
+import styles from "./style.module.scss";
 
 const { Title } = Typography;
 
@@ -24,7 +25,7 @@ export default function Cart() {
   }, [dispatch]);
 
   return (
-    <section style={{ maxWidth: 800 }}>
+    <section className={styles.cart}>
       <Title level={1}>Корзина</Title>
       {cartError ? (
         <Title level={2} type="danger">

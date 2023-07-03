@@ -1,0 +1,37 @@
+@import "@styles/variables.scss";
+
+.card {
+  margin-bottom: 15px;
+  border-radius: 3px;
+
+  &__row {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  &__img {
+    border-radius: 3px 3px 0 0;
+  }
+
+  &__columns {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__centered_columns {
+    display: flex;
+    align-items: center;
+  }
+
+  &__color_sample {
+    margin-left: 5px;
+    height: 20px;
+    width: 20px;
+    border: 1px solid $elements-border-color;
+    border-radius: 50%;
+  }
+
+  &__select {
+    width: 60px;
+  }
+}

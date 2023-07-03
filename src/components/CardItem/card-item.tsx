@@ -6,6 +6,7 @@ import { useAppDispatch } from "@hooks";
 import { addCartItemAsync } from "@store/shoppingCart";
 import { Spinner } from "@components";
 import { CardProps } from "@shared/typification";
+import styles from "./style.module.scss";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -31,13 +32,9 @@ const CardItem = ({
   return (
     <Card
       cover={
-        <img
-          alt={name}
-          src={photos[0].middle}
-          style={{ borderRadius: "3px 3px 0 0" }}
-        />
+        <img alt={name} src={photos[0].middle} className={styles.card__img} />
       }
-      style={{ borderRadius: 3 }}
+      className={styles.card}
     >
       <Spinner spinning={addingLoading}>
         <Meta title={name} style={{ marginBottom: 20 }} />
@@ -46,32 +43,20 @@ const CardItem = ({
           <Row
             justify="space-between"
             align="middle"
-            style={{ marginBottom: "15px", width: "100%" }}
+            className={styles.card__row}
           >
-            <Col span={12} style={{ display: "flex", alignItems: "center" }}>
+            <Col span={12} className={styles.card__centered_columns}>
               <Text>Color:</Text>
               <div
-                style={{
-                  marginLeft: 5,
-                  height: 20,
-                  width: 20,
-                  border: "1px solid #efe2ff",
-                  borderRadius: "50%",
-                  backgroundColor: color.value,
-                }}
+                className={styles.card__color_sample}
+                style={{ backgroundColor: color.value }}
               />
             </Col>
 
-            <Col
-              span={12}
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
+            <Col span={12} className={styles.card__columns}>
               <Select
                 defaultValue="XS"
-                style={{ width: 60 }}
+                className={styles.card__select}
                 onChange={handleSizeChange}
                 options={sizes.map((size) => ({
                   value: size.name,
@@ -85,10 +70,7 @@ const CardItem = ({
             <Text>{price}</Text>
           </Col>
 
-          <Col
-            span={12}
-            style={{ display: "flex", justifyContent: "flex-end" }}
-          >
+          <Col span={12} className={styles.card__columns}>
             <Button type="primary" onClick={handleClick}>
               В корзину
             </Button>

@@ -1,9 +1,13 @@
 $second-bg-color: #e9effe;
 $main-bg-color: #f4f4f5;
 $elements-bg-color: #ffffff;
+$elements-border-color: #efe2ff;
+$devider-border-color: #c7c7c7;
 
 :export {
   secondBgColor: $second-bg-color;
   mainBgColor: $main-bg-color;
   elementsBgColor: $elements-bg-color;
+  elementsBorderColor: $elements-border-color;
+  deviderBorderColor: $devider-border-color;
 }

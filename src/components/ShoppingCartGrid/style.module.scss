@@ -1,0 +1,12 @@
+.cart_grid {
+  width: 100%;
+
+  &__columns {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__text {
+    margin: 10px 0;
+  }
+}
