@@ -39,11 +39,20 @@ export const catalogSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getItemsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.items = action.payload;
+        return {
+          ...state,
+          items: action.payload,
+          status: "idle",
+          error: null,
+        };
       })
-      .addCase(getItemsAsync.rejected, (state) => {
-        state.status = "failed";
+      .addCase(getItemsAsync.rejected, (state, action) => {
+        return {
+          ...state,
+          items: [],
+          status: "failed",
+          error: action.payload as string,
+        };
       });
   },
 });
@@ -51,6 +60,7 @@ export const catalogSlice = createSlice({
 export const { startAddingLoading, stopAddingLoading } = catalogSlice.actions;
 
 export const selectItems = (state: AppState) => state.catalog.items;
+export const selectCatalogError = (state: AppState) => state.catalog.error;
 export const getCatalogLoading = (state: AppState) =>
   state.catalog.status === "loading";
 

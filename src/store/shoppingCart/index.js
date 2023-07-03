@@ -11,6 +11,7 @@ export {
   selectCartItems,
   selectCartPrice,
   selectCartAmount,
+  selectCartError,
   getCartLoading,
   getCartChangingLoading,
 } from "./shopping-cart-slice";

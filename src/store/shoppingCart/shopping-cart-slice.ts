@@ -58,28 +58,41 @@ export const cartSlice = createSlice({
           cartStatus: "idle",
           isEmpty: !action.payload.items.length,
           amount: action.payload.amount,
+          error: null,
         };
       })
-      .addCase(getCartItemsAsync.rejected, (state) => {
-        state.cartStatus = "failed";
+      .addCase(getCartItemsAsync.rejected, (state, action) => {
+        return {
+          ...state,
+          items: [],
+          summaryPrice: 0,
+          cartStatus: "failed",
+          isEmpty: true,
+          amount: 0,
+          error: action.payload as string,
+        };
       })
-      .addCase(addCartItemAsync.pending, (state, action) => {
+      .addCase(addCartItemAsync.pending, (state) => {
         state.itemStatus = "loading";
       })
-      .addCase(addCartItemAsync.fulfilled, (state, action) => {
+      .addCase(addCartItemAsync.fulfilled, (state) => {
         state.itemStatus = "idle";
+        state.error = null;
       })
       .addCase(addCartItemAsync.rejected, (state, action) => {
         state.itemStatus = "failed";
+        state.error = action.payload as string;
       })
       .addCase(removeCartItemsAsync.pending, (state) => {
         state.itemStatus = "loading";
       })
       .addCase(removeCartItemsAsync.fulfilled, (state) => {
         state.itemStatus = "idle";
+        state.error = null;
       })
-      .addCase(removeCartItemsAsync.rejected, (state) => {
+      .addCase(removeCartItemsAsync.rejected, (state, action) => {
         state.itemStatus = "failed";
+        state.error = action.payload as string;
       });
   },
 });
@@ -90,6 +103,7 @@ export const selectCartItems = (state: AppState) => state.shoppingCart.items;
 export const selectCartPrice = (state: AppState) =>
   state.shoppingCart.summaryPrice;
 export const selectCartAmount = (state: AppState) => state.shoppingCart.amount;
+export const selectCartError = (state: AppState) => state.shoppingCart.error;
 export const getCartLoading = (state: AppState) =>
   state.shoppingCart.cartStatus === "loading";
 export const getCartChangingLoading = (state: AppState) =>

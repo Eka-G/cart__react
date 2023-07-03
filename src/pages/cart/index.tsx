@@ -8,6 +8,7 @@ import {
   getCartItemsAsync,
   selectCartItems,
   selectCartPrice,
+  selectCartError,
 } from "@store/shoppingCart";
 
 const { Title } = Typography;
@@ -16,6 +17,7 @@ export default function Cart() {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
   const cartPrice = useAppSelector(selectCartPrice);
+  const cartError = useAppSelector(selectCartError);
 
   useEffect(() => {
     dispatch(getCartItemsAsync());
@@ -24,7 +26,13 @@ export default function Cart() {
   return (
     <section style={{ maxWidth: 800 }}>
       <Title level={1}>Корзина</Title>
-      <ShoppingCartGrid items={cartItems} summaryPrice={cartPrice} />
+      {cartError ? (
+        <Title level={2} type="danger">
+          {cartError}
+        </Title>
+      ) : (
+        <ShoppingCartGrid items={cartItems} summaryPrice={cartPrice} />
+      )}
     </section>
   );
 }

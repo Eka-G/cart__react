@@ -5,5 +5,6 @@ export {
   startAddingLoading,
   stopAddingLoading,
   selectItems,
+  selectCatalogError,
   getCatalogLoading,
 } from "./catalog-slice";
