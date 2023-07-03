@@ -4,10 +4,7 @@ import { useState } from "react";
 import { Button, Col, Image, InputNumber, Row, Select, Typography } from "antd";
 import { useAppDispatch } from "@hooks";
 import { ShoppingCartItemProps } from "@shared/typification";
-import {
-  addCartItemAsync,
-  removeCartItemsAsync,
-} from "@store/shopping-cart-slice";
+import { addCartItemAsync, removeCartItemsAsync } from "@store/shoppingCart";
 
 const { Text } = Typography;
 

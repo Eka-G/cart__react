@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Layout, Typography } from "antd";
 import { useAppSelector } from "@hooks";
-import { selectCartAmount } from "@store/shopping-cart-slice";
+import { selectCartAmount } from "@store/shoppingCart";
 import styles from "./style.module.scss";
 
 const { Header } = Layout;

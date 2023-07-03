@@ -3,7 +3,7 @@
 import { Card, Typography, Select, Button, Row, Col } from "antd";
 import { useState } from "react";
 import { useAppDispatch } from "@hooks";
-import { addCartItemAsync } from "@store/shopping-cart-slice";
+import { addCartItemAsync } from "@store/shoppingCart";
 import { Spinner } from "@components";
 import { CardProps } from "@shared/typification";
 
@@ -49,7 +49,7 @@ const CardItem = ({
             style={{ marginBottom: "15px", width: "100%" }}
           >
             <Col span={12} style={{ display: "flex", alignItems: "center" }}>
-              <Text style={{ fontSize: "12px" }}>Color:</Text>
+              <Text>Color:</Text>
               <div
                 style={{
                   marginLeft: 5,
@@ -82,7 +82,7 @@ const CardItem = ({
           </Row>
 
           <Col span={12}>
-            <Text style={{ fontSize: "12px" }}>{price}</Text>
+            <Text>{price}</Text>
           </Col>
 
           <Col

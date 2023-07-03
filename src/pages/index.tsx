@@ -4,12 +4,8 @@ import { useEffect } from "react";
 import { Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { CardGrid, Spinner } from "@components";
-import {
-  getItemsAsync,
-  selectItems,
-  getCatalogLoading,
-} from "@store/catalog-slice";
-import { getCartItemsAsync } from "@store/shopping-cart-slice";
+import { getItemsAsync, selectItems, getCatalogLoading } from "@store/catalog";
+import { getCartItemsAsync } from "@store/shoppingCart";
 
 const { Title } = Typography;
 

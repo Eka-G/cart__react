@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button, Col, Row, Typography } from "antd";
 import { useAppSelector } from "@hooks";
-import { getCartLoading } from "@store/shopping-cart-slice";
+import { getCartLoading } from "@store/shoppingCart";
 import { ShoppingCartItem, Spinner } from "@components";
 import { ShoppingCartGridProps } from "@shared/typification";
 

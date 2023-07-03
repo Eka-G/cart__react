@@ -6,8 +6,8 @@ import {
   configureStore,
 } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-import catalogReducer from "@store/catalog-slice";
-import shoppingCartReducer from "@store/shopping-cart-slice";
+import { catalogReducer } from "@store/catalog";
+import { shoppingCartReducer } from "@store/shoppingCart";
 
 const makeStore = () =>
   configureStore({

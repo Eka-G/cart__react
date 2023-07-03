@@ -8,7 +8,7 @@ import {
   getCartItemsAsync,
   selectCartItems,
   selectCartPrice,
-} from "@store/shopping-cart-slice";
+} from "@store/shoppingCart";
 
 const { Title } = Typography;
 
