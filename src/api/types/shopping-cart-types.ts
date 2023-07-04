@@ -4,7 +4,7 @@ import {
   Photo,
   Size,
   Colors,
-} from "@/api/types/common-types";
+} from "@api/types/common-types";
 
 export interface ShoppingCartResponce extends Responce {
   api_data: ShoppingCartData;

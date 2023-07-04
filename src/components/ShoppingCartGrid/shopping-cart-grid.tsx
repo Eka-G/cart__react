@@ -12,6 +12,7 @@ const { Text } = Typography;
 
 const ShoppingCartGrid = ({ items, summaryPrice }: ShoppingCartGridProps) => {
   const cartLoading = useAppSelector(getCartLoading);
+
   const itemsColumns = items.map((item) => (
     <Col span={24} key={`${item.id}-${item.count}`}>
       <ShoppingCartItem info={item} />

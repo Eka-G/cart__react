@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Col, Image, InputNumber, Row, Select, Typography } from "antd";
+import { Button, Col, Image, InputNumber, Row, Typography } from "antd";
 import { useAppDispatch } from "@hooks";
 import { ShoppingCartItemProps } from "@shared/typification";
 import { addCartItemAsync, removeCartItemsAsync } from "@store/shoppingCart";
@@ -13,13 +12,6 @@ const ShoppingCartItem = ({
   info: { id, name, photo, price, size, sizes, color, count, available },
 }: ShoppingCartItemProps) => {
   const dispatch = useAppDispatch();
-  const [currentSize, setSize] = useState(size);
-  const [currentAmount, setAmount] = useState(count);
-
-  const handleSizeChange = (value: string) => {
-    setSize(value);
-    setAmount(1);
-  };
 
   const handleAmountChange = (value: number, info: { type: "up" | "down" }) => {
     info.type === "up"
@@ -52,10 +44,10 @@ const ShoppingCartItem = ({
         <Text className={styles.cart_item__text}>Размер: {size}</Text>
         <InputNumber
           controls
-          value={currentAmount}
+          value={count}
           className={styles.cart_item__amount}
           min={1}
-          max={sizes[currentSize].amount}
+          max={sizes[size].amount}
           onStep={handleAmountChange}
           disabled={!available}
         />
@@ -64,12 +56,7 @@ const ShoppingCartItem = ({
           style={{ backgroundColor: color.value }}
         />
       </Col>
-      <Col
-        xs={{
-          order: 3,
-        }}
-        className={styles.cart_item__centered_columns}
-      >
+      <Col xs={{ order: 3 }} className={styles.cart_item__centered_columns}>
         <Text className={styles.cart_item__text}>{price}</Text>
         <Button onClick={haldleDetete}>Удалить</Button>
       </Col>

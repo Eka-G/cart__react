@@ -7,7 +7,7 @@ import {
   Model,
   Size,
   Details,
-} from "@/api/types/common-types";
+} from "@api/types/common-types";
 
 export interface CatalogResponce extends Responce {
   api_data: CatalogData;

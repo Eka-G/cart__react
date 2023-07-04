@@ -47,7 +47,6 @@ export interface CardGridProps {
 
 //
 // SHOPPING CART TYPES
-
 export interface ShoppingCartColor {
   name: string;
   amount: number;
