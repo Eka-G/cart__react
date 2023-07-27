@@ -47,7 +47,7 @@ const ShoppingCartItem = ({
           value={count}
           className={styles.cart_item__amount}
           min={1}
-          max={sizes[size].amount}
+          max={sizes[size]?.amount || 1}
           onStep={handleAmountChange}
           disabled={!available}
         />

@@ -1,0 +1,8 @@
+@import "@styles/variables.scss";
+
+.modal {
+  &__success_icon {
+    margin-right: 5px;
+    color: $success-color;
+  }
+}

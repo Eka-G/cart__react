@@ -1,23 +1,31 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Button, Col, Row, Typography } from "antd";
-import { useAppSelector } from "@hooks";
-import { getCartLoading } from "@store/shoppingCart";
-import { ShoppingCartItem, Spinner } from "@components";
+import { useAppDispatch, useAppSelector } from "@hooks";
+import { getCartLoading, removeCartItemsAsync } from "@store/shoppingCart";
+import { ShoppingCartItem, Spinner, SuccessModal } from "@components";
 import { ShoppingCartGridProps } from "@shared/typification";
 import styles from "./style.module.scss";
 
 const { Text } = Typography;
 
 const ShoppingCartGrid = ({ items, summaryPrice }: ShoppingCartGridProps) => {
+  const dispatch = useAppDispatch();
   const cartLoading = useAppSelector(getCartLoading);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const itemsColumns = items.map((item) => (
     <Col span={24} key={`${item.id}-${item.count}`}>
       <ShoppingCartItem info={item} />
     </Col>
   ));
+  const itemsIds = items.map((item) => item.id);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <Row
@@ -37,8 +45,11 @@ const ShoppingCartGrid = ({ items, summaryPrice }: ShoppingCartGridProps) => {
               </Text>
             </Col>
             <Col span={24} className={styles.cart_grid__columns}>
-              <Button type="primary">ЗАКАЗАТЬ</Button>
+              <Button type="primary" onClick={toggleModal}>
+                ЗАКАЗАТЬ
+              </Button>
             </Col>
+            <SuccessModal isModalOpen={isModalOpen} handleOk={toggleModal} />
           </>
         ) : (
           <Text>
